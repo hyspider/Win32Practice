@@ -14,4 +14,32 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainForm.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DesignForm.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseForm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainForm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DesignForm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
