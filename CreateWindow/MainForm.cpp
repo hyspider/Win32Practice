@@ -25,12 +25,15 @@ void TMainForm::InitControls()
 {
 #define IDB_NEW_PROJECT 101
 
-	RECT NewProjBtnRect = {10, 10, 113, 41};
+#define IDB_NEW_PROJECT2 102
+
+	TRect NewProjBtnRect = {10, 10, 113, 41};
+
 
 	FNewProjectButton.Create(
 				(HMENU)IDB_NEW_PROJECT,
 				_T("New Project"),
-				&NewProjBtnRect,
+				NewProjBtnRect,
 				FHandle
 				);
 }
@@ -46,10 +49,7 @@ LRESULT CALLBACK TMainForm::HandleMessage(UINT Msg, WPARAM WParam, LPARAM LParam
 
 		case WM_PAINT:
 			{
-				PAINTSTRUCT ps;
-				HDC hdc = BeginPaint(FHandle, &ps);
-				// TODO: Add any drawing code that uses hdc here...
-				EndPaint(FHandle, &ps);
+
 			}
 			break;
 

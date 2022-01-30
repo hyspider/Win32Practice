@@ -15,8 +15,8 @@ struct TRect : RECT
 	TRect(LONG Left, LONG Top, LONG Right, LONG bottom)
 	{
 		this->left = Left;
-		this->top = top;
-		this->right = right;
+		this->top = Top;
+		this->right = Right;
 		this->bottom = bottom;
 	}
 
@@ -138,7 +138,6 @@ protected:
 	HWND FHandle;
 
 protected:
-	virtual PCWSTR  ClassName() const = 0;
 	virtual LRESULT CALLBACK WindowProc(UINT Msg, WPARAM WParam, LPARAM LParam);
 	virtual void PreCreate(TCreateStruct &CS) {};
 	virtual void PreRegisterClass(WNDCLASSEX &WC) {};

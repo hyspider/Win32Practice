@@ -22,11 +22,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPreInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
 	GetApp()->Init(hInstance);
-	WNDCLASSEX Info;
-	Info.cbSize = sizeof(Info);
-	BOOL FindInfo = GetClassInfoEx(hInstance, _T("BUTTON"), &Info);
-	
-	DebugLog(_T("find info %u %d"), Info.cbSize, sizeof(Info));
 
 	RECT Rect = {};
 	SystemParametersInfo(SPI_GETWORKAREA, 0, &Rect, 0);  
@@ -40,7 +35,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPreInstance, _I
 	TMainForm MainForm;
 	if (!MainForm.Create(
 				_T("Main Form"),
-				WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_CLIPCHILDREN | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
+				//WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_CLIPCHILDREN | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
+				WS_OVERLAPPEDWINDOW,
 				WS_EX_OVERLAPPEDWINDOW,
 				0, 0,
 				Rect.right, MainForm.MaxHeight(),
@@ -71,6 +67,22 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPreInstance, _I
 	);
 
 	MainForm.InitControls();
+	/*
+#define IDB_NEW_PROJECT 101
+	::CreateWindow(
+		_T("BUTTON"),
+		_T("TEST"),
+		(WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON),
+		10,
+		10,
+		100,
+		100,
+		MainForm.Handle(),
+		(HMENU)IDB_NEW_PROJECT,
+		GetApp()->Instance(),
+		nullptr
+	);
+	*/
 
 	DesignForm.ShowWindow(nCmdShow);
 	DesignForm.UpdateWindow();

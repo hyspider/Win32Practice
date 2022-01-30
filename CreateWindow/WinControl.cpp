@@ -21,8 +21,8 @@ HWND TWinControl::Create(HWND Parent)
 	else
 	{
 		CS.lpszClass = _T("GWindow");
-	}
-	
+	}	
+
 	DWORD OverlappedStyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
 	
 	CS.style = WS_VISIBLE | ((Parent) ? WS_CHILD : OverlappedStyle);
@@ -36,6 +36,8 @@ HWND TWinControl::Create(HWND Parent)
 	}
 
 	PreCreate(CS);
+
+	DebugLog(_T("class %d"), CS.style);
 
 	DWORD Style = CS.style & ~WS_VISIBLE;
 
@@ -85,7 +87,7 @@ LRESULT CALLBACK TWinControl::WindowProc(UINT Msg, WPARAM WParam, LPARAM LParam)
 
 BOOL TWinControl::RegisterClass(WNDCLASSEX &WC)
 {
-	WNDCLASSEX Info;
+	WNDCLASSEX Info = {};
 	Info.cbSize = sizeof(Info);
 	BOOL Find = ::GetClassInfoEx(GetApp()->Instance(), WC.lpszClassName, &Info);
 	if (Find == FALSE)
