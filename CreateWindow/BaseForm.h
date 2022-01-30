@@ -1,5 +1,4 @@
-#ifndef __BASE_FORM__
-#define __BASE_FORM__
+#pragma once
 
 #include <Windows.h>
 
@@ -33,7 +32,7 @@ class TBaseForm
 		TBaseForm() : FHandle(nullptr) { }
 
 		BOOL Create(
-				PCWSTR WindowName,
+				LPCWSTR WindowName,
 				DWORD Style,
 				DWORD ExStyle = 0,
 				int X = CW_USEDEFAULT,
@@ -48,7 +47,9 @@ class TBaseForm
 			WNDCLASSEX WndClass = {0};
 
 			WndClass.cbSize = sizeof(WndClass);
-			WndClass.hbrBackground = reinterpret_cast<HBRUSH>(::GetStockObject(COLOR_WINDOW));
+			WndClass.style = CS_HREDRAW | CS_VREDRAW;
+			WndClass.cbClsExtra = 0;
+			WndClass.hbrBackground = (HBRUSH)(COLOR_WINDOWFRAME);
 			WndClass.lpfnWndProc = BASEFORM_DERIVED_TYPE::WindowProc;
 			WndClass.hInstance = InstanceHandle;
 			WndClass.lpszClassName = ClassName();
@@ -68,7 +69,7 @@ class TBaseForm
 	protected:
 
 		virtual PCWSTR  ClassName() const = 0;
-		virtual LRESULT HandleMessage(UINT Msg, WPARAM WParam, LPARAM LParam) = 0;
+		virtual LRESULT CALLBACK HandleMessage(UINT Msg, WPARAM WParam, LPARAM LParam) = 0;
 
 		HWND FHandle;
 
@@ -77,6 +78,4 @@ class TBaseForm
 		BOOL WINAPI ShowWindow(int CmdShow) { return ::ShowWindow(FHandle, CmdShow); }
 		BOOL WINAPI UpdateWindow() { return ::UpdateWindow(FHandle); }
 };
-
-#endif
 

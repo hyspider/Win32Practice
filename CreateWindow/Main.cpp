@@ -1,6 +1,10 @@
-#ifndef UNICODE
-#define UNICODE
-#endif
+/*
+#pragma comment(linker,"\"/manifestdependency:type='win32' \
+name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
+processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+*/
+
+#include "StdAfx.h"
 
 #include <windows.h>
 #include <tchar.h>
@@ -17,15 +21,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 /* 中文utf-8 */
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPreInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
-	GetApp()->Init();
+	GetApp()->Init(hInstance);
+	WNDCLASSEX Info;
+	Info.cbSize = sizeof(Info);
+	BOOL FindInfo = GetClassInfoEx(hInstance, _T("BUTTON"), &Info);
+	
+	DebugLog(_T("find info %u %d"), Info.cbSize, sizeof(Info));
 
+	RECT Rect = {};
+	SystemParametersInfo(SPI_GETWORKAREA, 0, &Rect, 0);  
+	DebugLog(_T("WindowRect left: %d top: %d right: %d bottom: %d"),
+			Rect.left,
+			Rect.top,
+			Rect.right,
+			Rect.bottom
+			);
+	HMENU MainMenu = ::LoadMenu(hInstance, MAKEINTRESOURCE(IDR_MAIN_MENU));
 	TMainForm MainForm;
 	if (!MainForm.Create(
 				_T("Main Form"),
-				WS_OVERLAPPEDWINDOW, WS_EX_OVERLAPPEDWINDOW,
-				100, 300,
-				300, 400,
-				hInstance
+				WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_CLIPCHILDREN | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
+				WS_EX_OVERLAPPEDWINDOW,
+				0, 0,
+				Rect.right, MainForm.MaxHeight(),
+				//320, 240,
+				hInstance,
+				nullptr//,
+				//MainMenu
 				))
 	{
 		MessageBox(NULL,
@@ -40,16 +62,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPreInstance, _I
 
 	DesignForm.Create(
 		_T("Design Form"),
-		WS_OVERLAPPEDWINDOW, WS_EX_OVERLAPPEDWINDOW,
-		600, 300,
-		300, 400
+		WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_CLIPCHILDREN,
+		WS_EX_TOOLWINDOW,
+		0, MainForm.MaxHeight(),
+		300, Rect.bottom - MainForm.MaxHeight(),
+		hInstance,
+		MainForm.Handle()
 	);
 
-	MainForm.ShowWindow(nCmdShow);
-	MainForm.UpdateWindow();
+	MainForm.InitControls();
 
 	DesignForm.ShowWindow(nCmdShow);
 	DesignForm.UpdateWindow();
+
+	MainForm.ShowWindow(nCmdShow);
+	MainForm.UpdateWindow();
 
 	SetWindowText(MainForm.Handle(), _T("中文"));
 
