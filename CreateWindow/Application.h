@@ -6,6 +6,8 @@
 
 #include "GDI.h"
 
+#define TRACE(x, ...) GetApp()->TraceLog(__FILE__, __func__, __LINE__, x, ##__VA_ARGS__);
+
 class TCriticalSection
 {
 public:
@@ -38,7 +40,7 @@ class TApplication
 		void DelGDIData(HGDIOBJ Object);
 		TGDIData *GetGDIData(HGDIOBJ Object);
 	public:
-		int DebugLog(const TCHAR *Fmt, ...);
+		int TraceLog(const char *File, const char *Func, long Line, const TCHAR *Fmt, ...);
 	protected:
 		HINSTANCE FAppInstance;
 	private:
@@ -50,7 +52,6 @@ TApplication *GetApp();
 
 HINSTANCE GetInstance();
 
-int DebugLog(const TCHAR* Fmt, ...);
 void StrCopy(wchar_t *Dst, const wchar_t *Src, size_t DstSize);
 
 class TThreadLock

@@ -21,7 +21,6 @@ class TButton : public TWinControl
 			}
 		}
 
-
 		BOOL Create(
 			HMENU ID,
 			LPCTSTR Caption,
@@ -30,33 +29,20 @@ class TButton : public TWinControl
 			DWORD Style = (WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON)
 		)
 		{
+			FCS.lpszClass = _T("BUTTON");
 			FCS.SetBoundingRect(Rect);
 			FCS.hMenu = ID;
 			FCS.lpszName = Caption;
 			FCS.style = Style;
 
-			//FHandle = TWinControl::Create(ParentHandle);
-			FHandle = ::CreateWindow(
-				_T("BUTTON"),
-				Caption,
-				Style,
-				Rect.left,
-				Rect.top,
-				Rect.right,
-				Rect.bottom,
-				ParentHandle,
-				ID,
-				GetApp()->Instance(),
-				nullptr
-			);
-			return (FHandle ? TRUE : FALSE);
+			TWinControl::Create(ParentHandle);
+			return (Handle() ? TRUE : FALSE);
 		};
 	public:
 		HMENU ID() const {return FID; };
 	protected:
 		HMENU FID;
 		TCreateStruct FCS;
-		void PreRegisterClass(WNDCLASSEX &WC) { WC.lpszClassName = _T("BUTTON"); };
 		void PreCreate(TCreateStruct &CS) { CS = FCS; };
 		virtual BOOL OnClick();
 };

@@ -54,7 +54,7 @@ LRESULT CALLBACK TMainForm::HandleMessage(UINT Msg, WPARAM WParam, LPARAM LParam
 			break;
 
 		case WM_NOTIFY:
-			DebugLog(_T("WM_NOTIFY"));
+			TRACE(_T("WM_NOTIFY"));
 			break;
 		case WM_COMMAND:
 			{
@@ -65,10 +65,10 @@ LRESULT CALLBACK TMainForm::HandleMessage(UINT Msg, WPARAM WParam, LPARAM LParam
 
 					DWORD LowLParam = LOWORD(LParam);
 					DWORD HighLParam = HIWORD(LParam);
-					DebugLog(_T("WM_COMMAND LParam handle %d low %d high %d"), LParam, LowLParam, HighLParam);
+					TRACE(_T("WM_COMMAND LParam handle %d low %d high %d"), LParam, LowLParam, HighLParam);
 					DWORD LowWParam = LOWORD(WParam);
 					DWORD HighWParam = HIWORD(WParam);
-					DebugLog(_T("WM_COMMAND WParam handle %d low %d high %d"), WParam, LowWParam, HighWParam);
+					TRACE(_T("WM_COMMAND WParam handle %d low %d high %d"), WParam, LowWParam, HighWParam);
 				}
 
 				TWMCommand CmdMsg = {};
@@ -96,31 +96,31 @@ LRESULT CALLBACK TMainForm::HandleMessage(UINT Msg, WPARAM WParam, LPARAM LParam
 		case WM_SIZING:
 			{
 				LPRECT Rect = (LPRECT)LParam;
-				DebugLog(_T("WM_SIZING Height %d"), Rect->bottom);
+				TRACE(_T("WM_SIZING Height %d"), Rect->bottom);
 				if (Rect->bottom != FMaxHeight) Rect->bottom = FMaxHeight;
 			}
 			break;
 		case WM_SIZE:
-			DebugLog(_T("WM_SIZE"));
+			TRACE(_T("WM_SIZE"));
 			break;
 		case WM_WINDOWPOSCHANGING:
 			{
 				LPWINDOWPOS Pos = (LPWINDOWPOS)LParam;
-				DebugLog(_T("WM_WINDOWPOSCHANGING flag %d"), Pos->flags);
+				TRACE(_T("WM_WINDOWPOSCHANGING flag %d"), Pos->flags);
 			}
 			break;
 		case WM_WINDOWPOSCHANGED:
-			DebugLog(_T("WM_WINDOWPOSCHANGED"));
+			TRACE(_T("WM_WINDOWPOSCHANGED"));
 			break;
 		case WM_SYSCOMMAND:
 			{
-				DebugLog(_T("WM_SYSCOMMAND Param %d"), WParam);
+				TRACE(_T("WM_SYSCOMMAND Param %d"), WParam);
 			}
 			return DefWindowProc(FHandle, Msg, WParam, LParam);
 		case WM_GETMINMAXINFO:
 			{
 				LPMINMAXINFO Info = (LPMINMAXINFO)LParam;
-				DebugLog(_T("WM_GETMINMAXINFO %d"), Info->ptMaxSize.y);
+				TRACE(_T("WM_GETMINMAXINFO %d"), Info->ptMaxSize.y);
 				Info->ptMaxSize.y = FMaxHeight;
 
 			}
@@ -133,6 +133,6 @@ LRESULT CALLBACK TMainForm::HandleMessage(UINT Msg, WPARAM WParam, LPARAM LParam
 
 BOOL TMainForm::NewProjBtnClick()
 {
-	DebugLog(_T("New project button click"));
+	TRACE(_T("New project button click"));
 	return true;
 }

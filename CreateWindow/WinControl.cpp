@@ -37,13 +37,11 @@ HWND TWinControl::Create(HWND Parent)
 
 	PreCreate(CS);
 
-	DebugLog(_T("class %d"), CS.style);
-
 	DWORD Style = CS.style & ~WS_VISIBLE;
 
 	HWND Handle = nullptr;
 
-	Handle = CreateWindowEx(CS.dwExStyle, CS.lpszClass, CS.lpszName, Style,
+	FHandle = CreateWindowEx(CS.dwExStyle, CS.lpszClass, CS.lpszName, Style,
 		CS.x, CS.y, CS.cx, CS.cy, Parent,
 		CS.hMenu, CS.hInstance, CS.lpCreateParams);
 
@@ -54,7 +52,7 @@ HWND TWinControl::Create(HWND Parent)
 		else ShowWindow();
 	}
 
-	return Handle;
+	return FHandle;
 };
 
 LRESULT CALLBACK TWinControl::DefaultWindowProc(HWND Handle, UINT Msg, WPARAM WParam, LPARAM LParam)
@@ -77,7 +75,7 @@ LRESULT CALLBACK TWinControl::DefaultWindowProc(HWND Handle, UINT Msg, WPARAM WP
 	{
 		return ThisPtr->WindowProc(Msg, WParam, LParam);
 	}
-	return DefWindowProc(Handle, Msg, WParam, LParam);
+	return ::DefWindowProc(Handle, Msg, WParam, LParam);
 }
 
 LRESULT CALLBACK TWinControl::WindowProc(UINT Msg, WPARAM WParam, LPARAM LParam)

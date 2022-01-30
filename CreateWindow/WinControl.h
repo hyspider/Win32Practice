@@ -4,68 +4,10 @@
 #include <commctrl.h>
 #include <assert.h>
 
-class TCreateStruct;
-
-struct TRect : RECT
-{
-	TRect()
-	{
-		Clear();
-	}
-	TRect(LONG Left, LONG Top, LONG Right, LONG bottom)
-	{
-		this->left = Left;
-		this->top = Top;
-		this->right = Right;
-		this->bottom = bottom;
-	}
-
-	BOOL IsEmpty() const { return ::IsRectEmpty(this); }
-	BOOL Clear() { return ::SetRectEmpty(this); }
-	BOOL Set(LONG Left, LONG Top, LONG Right, LONG Bottom)
-	{
-		return ::SetRect(this, Left, Top, Right, Bottom);
-	}
-
-	BOOL PointInRect(LONG X, LONG Y)
-	{
-		POINT pt = {X, Y};
-		return ::PtInRect(this, pt);
-	}
-
-
-	LONG Width() const { return right - left; }
-	LONG Height() const { return bottom - top; }
-};
-
-struct TSize : SIZE
-{
-	TSize()
-	{
-		this->cx = 0;
-		this->cy = 0;
-	}
-	TSize(LONG X, LONG Y)
-	{
-		this->cx = X;
-		this->cy = Y;
-	}
-};
-
-struct TPoint : POINT
-{
-	TPoint()
-	{
-		this->x = 0;
-		this->y = 0;
-	}
-
-	TPoint(LONG X, LONG Y)
-	{
-		this->x = X;
-		this->y = Y;
-	}
-};
+struct TCreateStruct;
+struct TRect;
+struct TSize;
+struct TPoint;
 
 class TWinControl
 {
@@ -147,8 +89,70 @@ private:
 };
 
 
+struct TRect : public RECT
+{
+	TRect()
+	{
+		Clear();
+	}
+	TRect(LONG Left, LONG Top, LONG Right, LONG bottom)
+	{
+		this->left = Left;
+		this->top = Top;
+		this->right = Right;
+		this->bottom = bottom;
+	}
+
+	BOOL IsEmpty() const { return ::IsRectEmpty(this); }
+	BOOL Clear() { return ::SetRectEmpty(this); }
+	BOOL Set(LONG Left, LONG Top, LONG Right, LONG Bottom)
+	{
+		return ::SetRect(this, Left, Top, Right, Bottom);
+	}
+
+	BOOL PointInRect(LONG X, LONG Y)
+	{
+		POINT pt = {X, Y};
+		return ::PtInRect(this, pt);
+	}
+
+
+	LONG Width() const { return right - left; }
+	LONG Height() const { return bottom - top; }
+};
+
+struct TSize : public SIZE
+{
+	TSize()
+	{
+		this->cx = 0;
+		this->cy = 0;
+	}
+	TSize(LONG X, LONG Y)
+	{
+		this->cx = X;
+		this->cy = Y;
+	}
+};
+
+struct TPoint : public POINT
+{
+	TPoint()
+	{
+		this->x = 0;
+		this->y = 0;
+	}
+
+	TPoint(LONG X, LONG Y)
+	{
+		this->x = X;
+		this->y = Y;
+	}
+};
+
+
 // CreateStruct: Thin wrapper for CREATESTRUCT structure.
-class TCreateStruct : public CREATESTRUCT
+struct TCreateStruct : public CREATESTRUCT
 {
 public:
 	TCreateStruct();

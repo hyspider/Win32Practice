@@ -2,6 +2,12 @@
 
 #include <tchar.h>
 #include <stdarg.h>
+#include <string>
+
+TApplication *GetApp()
+{
+	return TApplication::GetInstance();
+}
 
 TApplication *TApplication::GetInstance()
 {
@@ -30,24 +36,29 @@ TApplication::~TApplication()
 #endif
 }
 
-int TApplication::DebugLog(const TCHAR *Fmt, ...)
+int TApplication::TraceLog(const char *File, const char *Func, long Line, const TCHAR *Fmt, ...)
 {
 #ifdef _DEBUG
 	TCHAR Buffer[4096] = {};
 	va_list ArgPtr;
 	va_start(ArgPtr, Fmt);
 	int Cnt = wvsprintfW(Buffer, Fmt, ArgPtr);
-	Buffer[Cnt++] = _T('\n');
+	Buffer[Cnt] = _T('\n');
 	va_end(ArgPtr);
 	DWORD Size = 0;
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), Buffer, lstrlen(Buffer), &Size, NULL);
-#endif
-	return Cnt;
-}
 
-TApplication *GetApp()
-{
-	return TApplication::GetInstance();
+	std::string FileStr = File;
+	auto Pos = FileStr.find_last_of("\\");
+	if (Pos != std::string::npos)
+	{
+		FileStr = FileStr.substr(Pos + 1, FileStr.size());
+	}
+	char Header[1024] = {0};
+	snprintf(&Header[0], sizeof(Header), "<%s>[%s:%d]: ", FileStr.c_str(), Func, Line);
+	WriteConsoleA(GetStdHandle(STD_OUTPUT_HANDLE), Header, (DWORD)strlen(Header), &Size, nullptr);
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), Buffer, lstrlen(Buffer), &Size, nullptr);
+#endif
+	return 0;
 }
 
 TGDIData *TApplication::GetGDIData(HGDIOBJ Object)
@@ -77,24 +88,9 @@ void TApplication::DelGDIData(HGDIOBJ Object)
 		FGDIData.erase(Iter);
 }
 
-int DebugLog(const TCHAR* Fmt, ...)
-{
-#ifdef _DEBUG
-	TCHAR Buffer[4096] = {};
-	va_list ArgPtr;
-	va_start(ArgPtr, Fmt);
-	int Cnt = wvsprintfW(Buffer, Fmt, ArgPtr);
-	Buffer[Cnt++] = _T('\n');
-	va_end(ArgPtr);
-	DWORD Size = 0;
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), Buffer, lstrlen(Buffer), &Size, NULL);
-#endif
-	return Cnt;
-}
-
 HINSTANCE GetInstance()
 {
-	return (HINSTANCE)::GetModuleHandle(NULL);
+	return (HINSTANCE)::GetModuleHandle(nullptr);
 }
 
 TCriticalSection::TCriticalSection() : FCount(0)

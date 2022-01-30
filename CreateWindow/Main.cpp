@@ -25,7 +25,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPreInstance, _I
 
 	RECT Rect = {};
 	SystemParametersInfo(SPI_GETWORKAREA, 0, &Rect, 0);  
-	DebugLog(_T("WindowRect left: %d top: %d right: %d bottom: %d"),
+	TRACE(_T("WindowRect left: %d top: %d right: %d bottom: %d"),
 			Rect.left,
 			Rect.top,
 			Rect.right,
@@ -46,10 +46,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPreInstance, _I
 				//MainMenu
 				))
 	{
-		MessageBox(NULL,
+		MessageBox(nullptr,
 				_T("Create MainForm failed!"),
 				_T("Win32Practice"),
-				NULL);
+				0);
 
 		return 1;
 	}
@@ -93,7 +93,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPreInstance, _I
 	SetWindowText(MainForm.Handle(), _T("中文"));
 
 	MSG Msg;
-	while (GetMessage(&Msg, NULL, 0, 0))
+	while (GetMessage(&Msg, nullptr, 0, 0))
 	{
 		TranslateMessage(&Msg);
 		DispatchMessage(&Msg);
