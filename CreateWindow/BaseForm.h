@@ -32,7 +32,7 @@ class TBaseForm
 		TBaseForm() : FHandle(nullptr) { }
 
 		BOOL Create(
-				LPCWSTR WindowName,
+				LPCTSTR WindowName,
 				DWORD Style,
 				DWORD ExStyle = 0,
 				int X = CW_USEDEFAULT,
@@ -68,7 +68,7 @@ class TBaseForm
 
 	protected:
 
-		virtual PCWSTR  ClassName() const = 0;
+		virtual LPCTSTR  ClassName() const = 0;
 		virtual LRESULT CALLBACK HandleMessage(UINT Msg, WPARAM WParam, LPARAM LParam) = 0;
 
 		HWND FHandle;

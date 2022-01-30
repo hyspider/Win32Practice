@@ -6,6 +6,6 @@
 class TDesignForm : public TBaseForm<TDesignForm>
 {
 	public:
-		PCWSTR ClassName() const { return _T("Design Form"); }
+		LPCTSTR ClassName() const { return _T("Design Form"); }
 		LRESULT HandleMessage(UINT Msg, WPARAM WParam, LPARAM LParam);
 };

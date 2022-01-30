@@ -9,7 +9,7 @@ class TMainForm : public TBaseForm<TMainForm>
 		TMainForm() : FMaxHeight(200) {}
 		void InitControls();
 	public:
-		PCWSTR ClassName() const { return _T("Sample Form Class"); }
+		LPCTSTR ClassName() const { return _T("Sample Form Class"); }
 		LRESULT CALLBACK HandleMessage(UINT Msg, WPARAM WParam, LPARAM LParam);
 	public:
 		DWORD MaxHeight () const { return FMaxHeight; };
