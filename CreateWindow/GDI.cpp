@@ -231,7 +231,7 @@ HFONT TFont::CreatePointFontIndirect(const LOGFONT &LogFont, HDC DC /* = 0*/)
 	// convert nPointSize to logical units based on hDC
 	LOGFONT LogFontTmp = LogFont;
 
-	TPoint Point = { 0, 0 };
+	TPoint Point(0, 0);
 	Point.y = ::MulDiv(::GetDeviceCaps(DC, LOGPIXELSY), LogFont.lfHeight, 720);   // 72 points/inch, 10 decipoints/point
 	::DPtoLP(DC, &Point, 1);
 

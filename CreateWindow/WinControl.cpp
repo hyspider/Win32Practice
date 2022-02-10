@@ -5,11 +5,11 @@
 HWND TWinControl::Create(HWND Parent)
 {
 	WNDCLASSEX WC;
-	ZeroMemory(&WC, sizeof(WC));
+	::ZeroMemory(&WC, sizeof(WC));
 	WC.cbSize = sizeof(WC);
 
 	TCreateStruct CS;
-	ZeroMemory(&CS, sizeof(CS));
+	::ZeroMemory(&CS, sizeof(CS));
 	CS.hInstance = WC.hInstance;
 
 	PreRegisterClass(WC);
@@ -41,7 +41,7 @@ HWND TWinControl::Create(HWND Parent)
 
 	HWND Handle = nullptr;
 
-	FHandle = CreateWindowEx(CS.dwExStyle, CS.lpszClass, CS.lpszName, Style,
+	FHandle = ::CreateWindowEx(CS.dwExStyle, CS.lpszClass, CS.lpszName, Style,
 		CS.x, CS.y, CS.cx, CS.cy, Parent,
 		CS.hMenu, CS.hInstance, CS.lpCreateParams);
 
@@ -63,13 +63,13 @@ LRESULT CALLBACK TWinControl::DefaultWindowProc(HWND Handle, UINT Msg, WPARAM WP
 	{
 		CREATESTRUCT* CreateStruct = (CREATESTRUCT*)LParam;
 		ThisPtr = (TWinControl *)CreateStruct->lpCreateParams;
-		SetWindowLongPtr(Handle, GWLP_USERDATA, (LONG_PTR)ThisPtr);
+		::SetWindowLongPtr(Handle, GWLP_USERDATA, (LONG_PTR)ThisPtr);
 
 		ThisPtr->SetHandle(Handle);
 	}
 	else
 	{
-		ThisPtr = (TWinControl *)GetWindowLongPtr(Handle, GWLP_USERDATA);
+		ThisPtr = (TWinControl *)::GetWindowLongPtr(Handle, GWLP_USERDATA);
 	}
 	if (ThisPtr)
 	{
@@ -104,7 +104,7 @@ BOOL TWinControl::RegisterClass(WNDCLASSEX &WC)
 
 TCreateStruct::TCreateStruct()
 {
-	ZeroMemory(this, sizeof(*this));
+	::ZeroMemory(this, sizeof(*this));
 }
 
 void TCreateStruct::SetBoundingRect(const TRect &Rect)

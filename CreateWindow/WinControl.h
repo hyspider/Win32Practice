@@ -4,10 +4,82 @@
 #include <commctrl.h>
 #include <assert.h>
 
-struct TCreateStruct;
-struct TRect;
-struct TSize;
-struct TPoint;
+class TRect : public RECT
+{
+public:	
+	TRect()
+	{
+		Clear();
+	}
+	TRect(LONG Left, LONG Top, LONG Right, LONG bottom)
+	{
+		this->left = Left;
+		this->top = Top;
+		this->right = Right;
+		this->bottom = bottom;
+	}
+	operator LPRECT() { return this; }
+	operator LPCRECT() const { return this; }
+
+	BOOL IsEmpty() const { return ::IsRectEmpty(this); }
+	BOOL Clear() { return ::SetRectEmpty(this); }
+	BOOL Set(LONG Left, LONG Top, LONG Right, LONG Bottom)
+	{
+		return ::SetRect(this, Left, Top, Right, Bottom);
+	}
+
+	BOOL PointInRect(LONG X, LONG Y)
+	{
+		POINT pt = {X, Y};
+		return ::PtInRect(this, pt);
+	}
+
+
+	LONG Width() const { return right - left; }
+	LONG Height() const { return bottom - top; }
+};
+
+
+class TSize : public SIZE
+{
+public:	
+	TSize()
+	{
+		this->cx = 0;
+		this->cy = 0;
+	}
+	TSize(LONG X, LONG Y)
+	{
+		this->cx = X;
+		this->cy = Y;
+	}
+};
+
+class TPoint : public POINT
+{
+public:
+	TPoint()
+	{
+		this->x = 0;
+		this->y = 0;
+	}
+
+	TPoint(LONG X, LONG Y)
+	{
+		this->x = X;
+		this->y = Y;
+	}
+};
+
+
+// CreateStruct: Thin wrapper for CREATESTRUCT structure.
+class TCreateStruct : public CREATESTRUCT
+{
+public:
+	TCreateStruct();
+	void SetBoundingRect(const TRect &Rect);
+};
+
 
 class TWinControl
 {
@@ -70,6 +142,23 @@ public:
 		return (Enable ? AddExStyle(ExStyle) : RemoveExStyle(ExStyle));
 	}
 
+	LONG_PTR GetWindowLongPtr(int Index) const { return ::GetWindowLongPtr(*this, Index); }
+
+	TRect GetWindowRect() const
+	{
+		TRect Rect;
+		::GetWindowRect(*this, &Rect);
+		return Rect;
+	}
+
+	BOOL IsWindow() { return ::IsWindow(*this); }
+
+	BOOL IsWindowEnable() {	return ::IsWindowEnabled(*this); }
+
+	BOOL IsWindowVisible() { return (this->GetWindowLongPtr(GWL_STYLE) & WS_VISIBLE) != 0; }
+
+	operator HWND() const { return Handle(); }
+
 	BOOL ShowWindow(int CmdShow = SW_SHOWNORMAL) { return ::ShowWindow(FHandle, CmdShow); }
 
 	BOOL UpdateWindow() { return ::UpdateWindow(FHandle); }
@@ -86,77 +175,6 @@ protected:
 
 private:
 	BOOL RegisterClass(WNDCLASSEX &WC);
-};
-
-
-struct TRect : public RECT
-{
-	TRect()
-	{
-		Clear();
-	}
-	TRect(LONG Left, LONG Top, LONG Right, LONG bottom)
-	{
-		this->left = Left;
-		this->top = Top;
-		this->right = Right;
-		this->bottom = bottom;
-	}
-
-	BOOL IsEmpty() const { return ::IsRectEmpty(this); }
-	BOOL Clear() { return ::SetRectEmpty(this); }
-	BOOL Set(LONG Left, LONG Top, LONG Right, LONG Bottom)
-	{
-		return ::SetRect(this, Left, Top, Right, Bottom);
-	}
-
-	BOOL PointInRect(LONG X, LONG Y)
-	{
-		POINT pt = {X, Y};
-		return ::PtInRect(this, pt);
-	}
-
-
-	LONG Width() const { return right - left; }
-	LONG Height() const { return bottom - top; }
-};
-
-struct TSize : public SIZE
-{
-	TSize()
-	{
-		this->cx = 0;
-		this->cy = 0;
-	}
-	TSize(LONG X, LONG Y)
-	{
-		this->cx = X;
-		this->cy = Y;
-	}
-};
-
-struct TPoint : public POINT
-{
-	TPoint()
-	{
-		this->x = 0;
-		this->y = 0;
-	}
-
-	TPoint(LONG X, LONG Y)
-	{
-		this->x = X;
-		this->y = Y;
-	}
-};
-
-
-// CreateStruct: Thin wrapper for CREATESTRUCT structure.
-struct TCreateStruct : public CREATESTRUCT
-{
-public:
-	TCreateStruct();
-	void SetBoundingRect(const TRect &Rect);
 };
 
 
