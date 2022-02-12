@@ -78,9 +78,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Work\Win32Practice\Source;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\Work\Win32Practice\Source;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -148,24 +150,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="..\Source\Application.cpp" />
+    <ClCompile Include="..\Source\Button.cpp" />
     <ClCompile Include="DesignForm.cpp" />
-    <ClCompile Include="GDI.cpp" />
+    <ClCompile Include="..\Source\GDI.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainForm.cpp" />
-    <ClCompile Include="WinControl.cpp" />
+    <ClCompile Include="..\Source\WinControl.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
+    <ClInclude Include="..\Source\Application.h" />
     <ClInclude Include="BaseForm.h" />
-    <ClInclude Include="Button.h" />
+    <ClInclude Include="..\Source\Button.h" />
     <ClInclude Include="DesignForm.h" />
-    <ClInclude Include="GDI.h" />
+    <ClInclude Include="..\Source\GDI.h" />
     <ClInclude Include="MainForm.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="WinControl.h" />
+    <ClInclude Include="..\Source\WinControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

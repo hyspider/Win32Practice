@@ -18,7 +18,7 @@
     <ClCompile Include="Main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
+    <ClCompile Include="..\Source\Application.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MainForm.cpp">
@@ -27,18 +27,18 @@
     <ClCompile Include="DesignForm.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
+    <ClCompile Include="..\Source\Button.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WinControl.cpp">
+    <ClCompile Include="..\Source\WinControl.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="GDI.cpp">
+    <ClCompile Include="..\Source\GDI.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
+    <ClInclude Include="..\Source\Application.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="BaseForm.h">
@@ -56,13 +56,13 @@
     <ClInclude Include="StdAfx.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
+    <ClInclude Include="..\Source\Button.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WinControl.h">
+    <ClInclude Include="..\Source\WinControl.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="GDI.h">
+    <ClInclude Include="..\Source\GDI.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
